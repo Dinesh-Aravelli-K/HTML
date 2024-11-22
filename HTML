@@ -1,0 +1,60 @@
+Sub SearchPrintAndSaveInChrome()
+    Dim searchQuery As String
+    Dim chromePath As String
+    Dim url As String
+    Dim fileName As String
+    
+    ' Set your search query
+    searchQuery = "Your search term here"
+    
+    ' URL encode the search query
+    searchQuery = Replace(searchQuery, " ", "+")
+    
+    ' Set the file name based on the search query
+    fileName = Replace(searchQuery, "+", "_") & ".pdf" ' Change extension as needed
+    
+    ' Path to Google Chrome
+    chromePath = """C:\Program Files\Google\Chrome\Application\chrome.exe"""
+    
+    ' Construct the search URL
+    url = "https://www.google.com/search?q=" & searchQuery
+    
+    ' Open Chrome with the search URL
+    shell (chromePath & " -url " & url)
+    
+    ' Wait for a few seconds to ensure the page loads
+    Application.Wait Now + TimeValue("00:00:05") ' Increased wait time
+    
+    ' Send Ctrl + P to open the print dialog
+    SendKeys "^p", True
+    
+    ' wait for 2 seconds
+    Application.Wait Now + TimeValue("00:00:02")
+    
+    ' To print
+    SendKeys "{ENTER}", True
+    
+    ' Wait for the print dialog to open
+    Application.Wait Now + TimeValue("00:00:03") ' Increased wait time
+    
+    ' Send Tab to navigate to the Save as PDF option (may need adjustment)
+   ' SendKeys "{TAB 3}", True ' Adjust the number of tabs if necessary
+    
+    ' Wait for a moment
+  '  Application.Wait Now + TimeValue("00:00:10") ' Increased wait time
+    
+    ' Send Enter to select Save as PDF
+  '  SendKeys "{ENTER}", True
+    
+    ' Wait for the Save As dialog to open
+   ' Application.Wait Now + TimeValue("00:00:10") ' Increased wait time
+    
+    ' Type the file name
+    SendKeys fileName, True
+    
+    ' Wait for a moment
+    Application.Wait Now + TimeValue("00:00:02") ' Increased wait time
+    
+    ' Send Enter to save the file
+    SendKeys "{ENTER}", True
+End Sub
